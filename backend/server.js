@@ -5,7 +5,7 @@ import helmet from 'helmet';
 import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
 
-import apiRoutes from './routes/api.mjs';
+import apiRoutes from './routes/api.js';
 
 dotenv.config();
 
