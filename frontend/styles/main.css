@@ -1,0 +1,19 @@
+#game-container {
+    position: relative;
+}
+
+#game-image {
+    max-width: 100%;
+    height: auto;
+}
+
+#targeting-box {
+    position: absolute;
+    border: 2px solid red;
+    width: 100px;
+    height: 100px;
+}
+
+.hidden {
+    display: none;
+}
