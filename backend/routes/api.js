@@ -1,6 +1,6 @@
 import express from 'express';
-import * as gameController from '../controllers/gameController.mjs';
-import { validate, schemas } from '../middleware/validation.mjs';
+import * as gameController from '../controllers/gameController.js';
+import { validate, schemas } from '../middleware/validation.js';
 
 const router = express.Router();
 
