@@ -3,6 +3,9 @@ body {
     background-color: #f0f0f0;
     margin: 0;
     padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 #game-container {
@@ -142,3 +145,15 @@ body {
   #image-selection img:hover {
     transform: scale(1.05);
   }
+
+  footer {
+    margin-top: auto;
+    text-align: center;
+    padding: 20px;
+    background-color: #f8f9fa;
+}
+
+.heart {
+    color: red;
+    font-size: 1.2em;
+}
