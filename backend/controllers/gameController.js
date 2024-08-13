@@ -1,5 +1,6 @@
-const crypto = require('crypto');
-const { fetchRandomImages } = require('../services/imageService');
+import crypto from 'crypto';
+import { Random } from 'random-js';
+import { fetchRandomImages } from '../services/imageService.mjs';
 
 const difficultyLevels = {
   easy: { characters: 3, radius: 50 },
@@ -164,4 +165,16 @@ exports.selectImage = (req, res) => {
   } else {
     res.status(400).json({ error: 'Invalid image selection' });
   }
+};
+
+export {
+  startNewGame,
+  validateCharacter,
+  submitScore,
+  getHighScores,
+  getHint,
+  getDailyChallenge,
+  validateDailyChallenge,
+  getAvailableImages,
+  selectImage
 };
