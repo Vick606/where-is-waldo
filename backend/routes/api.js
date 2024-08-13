@@ -1,15 +1,17 @@
-const express = require('express');
+import express from 'express';
+import * as gameController from '../controllers/gameController.mjs';
+import { validate, schemas } from '../middleware/validation.mjs';
+
 const router = express.Router();
-const gameController = require('../controllers/gameController');
 
-router.post('/start-game', gameController.startNewGame);
-router.post('/validate', gameController.validateCharacter);
-router.post('/submit-score', gameController.submitScore);
+router.post('/start-game', validate(schemas.startNewGame), gameController.startNewGame);
+router.post('/validate', validate(schemas.validateCharacter), gameController.validateCharacter);
+router.post('/submit-score', validate(schemas.submitScore), gameController.submitScore);
 router.get('/high-scores', gameController.getHighScores);
-router.post('/hint', gameController.getHint);
+router.post('/hint', validate(schemas.getHint), gameController.getHint);
 router.get('/daily-challenge', gameController.getDailyChallenge);
-router.post('/validate-daily', gameController.validateDailyChallenge);
+router.post('/validate-daily', validate(schemas.validateCharacter), gameController.validateDailyChallenge);
 router.get('/available-images', gameController.getAvailableImages);
-router.post('/select-image', gameController.selectImage);
+router.post('/select-image', validate(schemas.selectImage), gameController.selectImage);
 
-module.exports = router;
+export default router;
