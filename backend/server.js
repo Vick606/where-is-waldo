@@ -2,12 +2,15 @@ const express = require('express');
 const path = require('path');
 const apiRoutes = require('./routes/api');
 require('dotenv').config();
-const PORT = process.env.PORT || 3000;
+const helmet = require('helmet');
+
+app.use(helmet());
 
 const cors = require('cors');
 app.use(cors());
 
 const app = express();
+const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '../frontend')));
