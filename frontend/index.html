@@ -7,16 +7,14 @@
     <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
+    <h1>Where's Waldo?</h1>
     <div id="game-container" style="display: none;">
         <img id="game-image" alt="Find the characters">
-        <div id="targeting-box" class="hidden">
-            <ul id="character-list">
-                <li>Waldo</li>
-                <li>Wizard</li>
-                <li>Wilma</li>
-            </ul>
-        </div>
+        <div id="targeting-box" class="hidden"></div>
+        <ul id="character-list"></ul>
     </div>
-    <script src="scripts/app.js"></script>
+    <button id="hint-button">Get Hint</button>
+    <button id="daily-challenge-button">Start Daily Challenge</button>
+    <script type="module" src="scripts/app.js"></script>
 </body>
 </html>
