@@ -1,10 +1,16 @@
-const express = require('express');
-const path = require('path');
-const cors = require('cors');
-const helmet = require('helmet');
-require('dotenv').config();
+import express from 'express';
+import path from 'path';
+import cors from 'cors';
+import helmet from 'helmet';
+import dotenv from 'dotenv';
+import { fileURLToPath } from 'url';
 
-const apiRoutes = require('./routes/api');
+import apiRoutes from './routes/api.mjs';
+
+dotenv.config();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
