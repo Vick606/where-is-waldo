@@ -1,10 +1,21 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 20px;
+}
+
 #game-container {
     position: relative;
+    max-width: 1000px;
+    margin: 0 auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 #game-image {
     max-width: 100%;
     height: auto;
+    display: block;
 }
 
 #targeting-box {
@@ -12,8 +23,103 @@
     border: 2px solid red;
     width: 100px;
     height: 100px;
+    border-radius: 50%;
+    pointer-events: none;
+    transition: all 0.1s ease;
 }
 
-.hidden {
-    display: none;
+#character-list {
+    position: absolute;
+    list-style-type: none;
+    padding: 10px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    top: 110%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#character-list li {
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#character-list li:hover {
+    background-color: #f0f0f0;
+}
+
+#character-list li.found {
+    text-decoration: line-through;
+    color: #888;
+}
+
+.character-marker {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background-color: rgba(0, 255, 0, 0.5);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.feedback {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    animation: fadeInOut 2s ease-in-out;
+}
+
+@keyframes fadeInOut {
+    0%, 100% { opacity: 0; }
+    10%, 90% { opacity: 1; }
+}
+
+.score-popup, .high-scores {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.score-popup input, .score-popup button, .high-scores button {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.score-popup button, .high-scores button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.score-popup button:hover, .high-scores button:hover {
+    background-color: #45a049;
+}
+
+.high-scores ol {
+    padding-left: 20px;
+    text-align: left;
 }
