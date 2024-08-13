@@ -2,6 +2,7 @@
   "name": "where-is-waldo",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "node backend/server.js",
     "dev": "nodemon backend/server.js"
