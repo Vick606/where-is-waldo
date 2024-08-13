@@ -270,10 +270,18 @@ async function getHint() {
 }
 
 async function startDailyChallenge() {
-  const response = await fetch('/api/daily-challenge');
-  const data = await response.json();
-  currentDifficulty = data.difficulty;
-  startGame();
+  try {
+    const response = await fetch('/api/daily-challenge');
+    if (!response.ok) {
+      throw new Error('Failed to start daily challenge');
+    }
+    const data = await response.json();
+    currentDifficulty = data.difficulty;
+    startGame(data.characterCount);
+  } catch (error) {
+    console.error('Error starting daily challenge:', error);
+    showFeedback('Failed to start daily challenge. Please try again.');
+  }
 }
 
 document.getElementById('hint-button').addEventListener('click', getHint);
