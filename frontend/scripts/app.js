@@ -9,9 +9,17 @@ let currentDifficulty = 'easy';
 let hintsUsed = 0;
 
 async function loadAvailableImages() {
-  const response = await fetch('/api/available-images');
-  const images = await response.json();
-  displayImageSelection(images);
+  try {
+    const response = await fetch('/api/available-images');
+    if (!response.ok) {
+      throw new Error('Failed to load available images');
+    }
+    const images = await response.json();
+    displayImageSelection(images);
+  } catch (error) {
+    console.error('Error loading available images:', error);
+    showFeedback('Failed to load images. Please try again.');
+  }
 }
 
 function displayImageSelection(images) {
@@ -31,35 +39,60 @@ function displayImageSelection(images) {
 }
 
 async function selectImage(imageId) {
-  const response = await fetch('/api/select-image', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ imageId }),
-  });
-  const data = await response.json();
-  document.getElementById('image-selection').remove();
-  gameImage.src = data.image.url;
-  startGame();
-}
-
-function startGame() {
-  gameContainer.style.display = 'block';
-  startTime = new Date();
-  foundCharacters = [];
-  hintsUsed = 0;
-  updateCharacterList();
-}
-
-function updateCharacterList() {
-  fetch(`/api/characters?difficulty=${currentDifficulty}`)
-    .then(response => response.json())
-    .then(characters => {
-      characterList.innerHTML = characters
-        .map(char => `<li class="${foundCharacters.includes(char) ? 'found' : ''}">${char}</li>`)
-        .join('');
+  try {
+    const response = await fetch('/api/select-image', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ imageId }),
     });
+    if (!response.ok) {
+      throw new Error('Failed to select image');
+    }
+    const data = await response.json();
+    document.getElementById('image-selection').remove();
+    gameImage.src = data.image.url;
+    startGame(data.characterCount);
+  } catch (error) {
+    console.error('Error selecting image:', error);
+    showFeedback('Failed to select image. Please try again.');
+  }
+}
+
+async function startGame(characterCount) {
+  try {
+    const response = await fetch('/api/start-game', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ difficulty: currentDifficulty }),
+    });
+    if (!response.ok) {
+      throw new Error('Failed to start game');
+    }
+    const gameData = await response.json();
+    
+    gameContainer.style.display = 'block';
+    startTime = new Date();
+    foundCharacters = [];
+    hintsUsed = 0;
+    updateCharacterList(characterCount);
+    
+    console.log('Game started:', gameData);
+  } catch (error) {
+    console.error('Error starting game:', error);
+    showFeedback('Failed to start game. Please try again.');
+  }
+}
+
+function updateCharacterList(characterCount) {
+  // Instead of fetching characters, we'll create a list based on the character count
+  const characters = ['Waldo', 'Wizard', 'Wilma', 'Odlaw', 'Wenda'].slice(0, characterCount);
+  characterList.innerHTML = characters
+    .map(char => `<li class="${foundCharacters.includes(char) ? 'found' : ''}">${char}</li>`)
+    .join('');
 }
 
 function normalizeCoordinates(x, y) {
@@ -182,15 +215,19 @@ async function showScorePopup(timeTaken) {
 
 async function submitScore(playerName, timeTaken) {
   try {
-    await fetch('/api/submit-score', {
+    const response = await fetch('/api/submit-score', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ playerName, timeTaken, hintsUsed }),
     });
+    if (!response.ok) {
+      throw new Error('Failed to submit score');
+    }
   } catch (error) {
     console.error('Error submitting score:', error);
+    showFeedback('Failed to submit score. Please try again.');
   }
 }
 
