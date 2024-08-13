@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 import { Random } from 'random-js';
-import { fetchRandomImages } from '../services/imageService.mjs';
+import { fetchRandomImages } from '../services/imageService.js';
 
 const difficultyLevels = {
   easy: { characters: 3, radius: 50 },
