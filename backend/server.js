@@ -12,6 +12,11 @@ app.use(express.static(path.join(__dirname, '../frontend')));
 
 app.use('/api', apiRoutes);
 
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
