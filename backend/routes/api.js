@@ -9,5 +9,7 @@ router.get('/high-scores', gameController.getHighScores);
 router.post('/hint', gameController.getHint);
 router.get('/daily-challenge', gameController.getDailyChallenge);
 router.post('/validate-daily', gameController.validateDailyChallenge);
+router.get('/available-images', gameController.getAvailableImages);
+router.post('/select-image', gameController.selectImage);
 
 module.exports = router;
