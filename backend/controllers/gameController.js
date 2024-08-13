@@ -41,7 +41,7 @@ function generateDailyChallenge() {
   if (dailyChallengeDate !== today) {
     const seed = crypto.createHash('md5').update(today).digest('hex');
     const seedNumber = parseInt(seed.substr(0, 8), 16);
-    const random = new (require('random-js').Random)(seedNumber);
+    const random = new Random(seedNumber);
 
     dailyChallenge = {
       difficulty: Object.keys(difficultyLevels)[random.integer(0, 2)],
@@ -65,7 +65,7 @@ function generateDailyChallenge() {
   return dailyChallenge;
 }
 
-exports.startNewGame = (req, res) => {
+export const startNewGame = (req, res) => {
   const { difficulty } = req.body;
   if (difficultyLevels[difficulty]) {
     currentDifficulty = difficulty;
@@ -76,7 +76,7 @@ exports.startNewGame = (req, res) => {
   }
 };
 
-exports.validateCharacter = (req, res) => {
+export const validateCharacter = (req, res) => {
   const { character, x, y } = req.body;
   const characterPos = characterPositions[character];
 
@@ -90,7 +90,7 @@ exports.validateCharacter = (req, res) => {
   res.json({ isCorrect });
 };
 
-exports.submitScore = (req, res) => {
+export const submitScore = (req, res) => {
   const { playerName, timeTaken, hintsUsed } = req.body;
   const adjustedTime = timeTaken + (hintsUsed * hintPenalty);
   highScores.push({ playerName, timeTaken: adjustedTime, hintsUsed });
@@ -99,11 +99,11 @@ exports.submitScore = (req, res) => {
   res.status(201).json({ message: 'Score submitted successfully' });
 };
 
-exports.getHighScores = (req, res) => {
+export const getHighScores = (req, res) => {
   res.json(highScores);
 };
 
-exports.getHint = (req, res) => {
+export const getHint = (req, res) => {
   const { character } = req.body;
   const characterPos = characterPositions[character];
 
@@ -126,7 +126,7 @@ function getQuadrant(x, y) {
   return 'bottom-right quarter';
 }
 
-exports.getDailyChallenge = (req, res) => {
+export const getDailyChallenge = (req, res) => {
   const challenge = generateDailyChallenge();
   res.json({
     difficulty: challenge.difficulty,
@@ -134,7 +134,7 @@ exports.getDailyChallenge = (req, res) => {
   });
 };
 
-exports.validateDailyChallenge = (req, res) => {
+export const validateDailyChallenge = (req, res) => {
   const { character, x, y } = req.body;
   const challenge = generateDailyChallenge();
   const characterPos = challenge.positions[character];
@@ -149,14 +149,14 @@ exports.validateDailyChallenge = (req, res) => {
   res.json({ isCorrect });
 };
 
-exports.getAvailableImages = async (req, res) => {
+export const getAvailableImages = async (req, res) => {
   if (availableImages.length === 0) {
     availableImages = await fetchRandomImages();
   }
   res.json(availableImages);
 };
 
-exports.selectImage = (req, res) => {
+export const selectImage = (req, res) => {
   const { imageId } = req.body;
   const selectedImage = availableImages.find(img => img.id === imageId);
   if (selectedImage) {
@@ -165,16 +165,4 @@ exports.selectImage = (req, res) => {
   } else {
     res.status(400).json({ error: 'Invalid image selection' });
   }
-};
-
-export {
-  startNewGame,
-  validateCharacter,
-  submitScore,
-  getHighScores,
-  getHint,
-  getDailyChallenge,
-  validateDailyChallenge,
-  getAvailableImages,
-  selectImage
 };
