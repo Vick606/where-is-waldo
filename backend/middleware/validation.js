@@ -1,4 +1,4 @@
-const Joi = require('joi');
+import Joi from 'joi';
 
 const validations = {
   startNewGame: Joi.object({
@@ -36,7 +36,4 @@ function validate(schema) {
   };
 }
 
-module.exports = {
-  validate,
-  schemas: validations
-};
+export { validate, validations as schemas };
