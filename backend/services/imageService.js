@@ -1,5 +1,7 @@
-const fetch = require('node-fetch');
-require('dotenv').config();
+import fetch from 'node-fetch';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const UNSPLASH_API_URL = 'https://api.unsplash.com/photos/random';
 const UNSPLASH_ACCESS_KEY = process.env.UNSPLASH_ACCESS_KEY;
@@ -23,4 +25,4 @@ async function fetchRandomImages(count = 10) {
   }
 }
 
-module.exports = { fetchRandomImages };
+export { fetchRandomImages };
