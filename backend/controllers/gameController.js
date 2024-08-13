@@ -1,15 +1,40 @@
-const characterPositions = {
-    Waldo: { x: 500, y: 300, radius: 50 },
-    Wizard: { x: 800, y: 400, radius: 50 },
-    Wilma: { x: 200, y: 500, radius: 50 },
+const difficultyLevels = {
+    easy: { characters: 3, radius: 50 },
+    medium: { characters: 4, radius: 40 },
+    hard: { characters: 5, radius: 30 },
   };
   
-  let highScores = [];
+  let currentDifficulty = 'easy';
+  let characterPositions = {};
   
-  function distanceBetweenPoints(x1, y1, x2, y2) {
-    return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+  function generateCharacterPositions(difficulty) {
+    const { characters, radius } = difficultyLevels[difficulty];
+    const newPositions = {};
+    const characterNames = ['Waldo', 'Wizard', 'Wilma', 'Odlaw', 'Wenda'];
+  
+    for (let i = 0; i < characters; i++) {
+      newPositions[characterNames[i]] = {
+        x: Math.floor(Math.random() * 1000),
+        y: Math.floor(Math.random() * 600),
+        radius: radius,
+      };
+    }
+  
+    return newPositions;
   }
   
+  exports.startNewGame = (req, res) => {
+    const { difficulty } = req.body;
+    if (difficultyLevels[difficulty]) {
+      currentDifficulty = difficulty;
+      characterPositions = generateCharacterPositions(difficulty);
+      res.json({ message: 'New game started', difficulty, characterCount: Object.keys(characterPositions).length });
+    } else {
+      res.status(400).json({ error: 'Invalid difficulty level' });
+    }
+  };
+  
+  // Update the validateCharacter function
   exports.validateCharacter = (req, res) => {
     const { character, x, y } = req.body;
     const characterPos = characterPositions[character];
@@ -23,6 +48,7 @@ const characterPositions = {
   
     res.json({ isCorrect });
   };
+  
   
   exports.submitScore = (req, res) => {
     const { playerName, timeTaken } = req.body;
