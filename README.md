@@ -4,7 +4,7 @@
 ![Express.js](https://img.shields.io/badge/Express.js-404D59?style=for-the-badge)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 
-Welcome to the most exciting implementation of the classic "Where's Waldo?" game! This project is part of The Odin Project's NODE course, showcasing full-stack development skills with a fun, interactive twist.
+Welcome to the most exciting implementation of the classic "Where's Waldo?" game! This project is part of The Odin Project's NODE course, showcasing full-stack development skills with a fun, interactive twist. Nice game.
 
 ## 🌟 Features
 
